@@ -1,0 +1,6 @@
+mysql-connector-python==2.2.29
+Flask==3.1.0
+python-dotenv==1.0.1
+beautifulsoup4==4.12.3
+selenium==4.29.0
+Werkzeug==3.1.3
