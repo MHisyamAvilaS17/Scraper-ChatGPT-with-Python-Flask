@@ -36,3 +36,4 @@ The app will be running at http://127.0.0.1:5000/.
   3.  Start a new scraping session on the home page by entering the URL for ChatGPT scraping.
   4.  Preprocess the scraped data by choosing either Lower Case or Upper Case conversion.
   5.  Review your past scraping sessions or delete unwanted data.
+  6.  Download Scraping Results using csv or pdf format
