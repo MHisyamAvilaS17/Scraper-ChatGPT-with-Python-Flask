@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import uuid
 from datetime import datetime
+import csv
+import io
 
 
 # Muat environment variables dari .env file
@@ -196,6 +198,34 @@ def delete(conversation_id):
     
     # Redirect back to the home page
     return redirect(url_for('home', conversation_id=conversation_id))
+
+@app.route('/download_csv/<conversation_id>', methods=['GET'])
+def download_csv(conversation_id):
+    cursor = db.cursor()
+    query = """
+        SELECT question, response, preprocess, question_preprocess, response_preprocess 
+        FROM scraping_results 
+        WHERE conversation_id = %s
+    """
+    cursor.execute(query, (conversation_id,))
+    results = cursor.fetchall()
+    cursor.close()
+
+    # Buat respons CSV
+    output = []
+    output.append(['Question', 'Response', 'Preprocess', 'Question Preprocess', 'Response Preprocess'])
+
+    for row in results:
+        output.append(list(row))
+
+    # Konversi hasilnya ke CSV
+    si = io.StringIO()
+    cw = csv.writer(si)
+    cw.writerows(output)
+    response = make_response(si.getvalue())
+    response.headers['Content-Disposition'] = f'attachment; filename=scraped_results_{conversation_id}.csv'
+    response.headers['Content-type'] = 'text/csv'
+    return response
 
 
 @app.route('/register', methods=['GET', 'POST'])
