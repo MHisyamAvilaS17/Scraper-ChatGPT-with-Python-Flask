@@ -9,7 +9,7 @@
         font-family: 'Arial', sans-serif;
         background-color: #ffffff;
         background-image: radial-gradient(circle, #4CAF50 1px, transparent 1px);
-        background-size: 20px 20px; /* Jarak antar titik */
+        background-size: 20px 20px; 
         margin: 0;
         padding: 20px;
         color: #333;
@@ -57,7 +57,40 @@
     .preprocessed-data h2 {
         margin-bottom: 20px;
     }
-</style>
+
+    .download-button {
+        display: flex;
+        justify-content: center; 
+        gap: 10px; 
+        margin-top: 20px;
+    }
+
+    .download-button a,
+    .download-button button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .download-button a:hover,
+    .download-button button:hover {
+        background-color: #45a049;
+        transform: scale(1.05); 
+    }
+
+    .download-button a:active,
+    .download-button button:active {
+        background-color: #39843b;
+        transform: scale(1); 
+    }
     </style>
 </head>
 <body>
@@ -90,6 +123,16 @@
         </tr>
         {% endfor %}
     </table>
+    <div class="download-button">
+        <a href="{{ url_for('download_csv', conversation_id=conversation_id) }}">Download CSV</a>
+        <button id="dwpdf">Download PDF</button>
+    </div> 
 
 </body>
+
+<script>
+document.getElementById("dwpdf").addEventListener('click',()=>{
+    window.print()
+})
+</script>
 </html>
